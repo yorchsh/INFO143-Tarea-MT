@@ -22,5 +22,5 @@ estado_final: str = "q2"
 palabra_entrada: str = # Tomar entrada del usuario
 
 transiciones: dict[str, dict[str: tuple[string, string, int]]] = {"q0": {"a": (q1, "b", RIGHT), "b": (q1, "a", RIGHT)}, 
-                                                                  "q1": {"c": ("q1", "d", RIGHT}, "\0": ("q1", "\0", RIGHT)}
+                                                                  "q1": {"c": ("q1", "d", RIGHT}, "\0": ("q2", "\0", LEFT)}
                                                                   }
