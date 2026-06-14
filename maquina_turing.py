@@ -38,7 +38,6 @@ def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str
                 estado_entrada: str = entradas[0][2:]
 
                 if len(entradas[1]) != 2:
-                    
                     return None
                 
                 if entradas[1][1] != ')':
