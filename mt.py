@@ -3,9 +3,9 @@ from tkinter import ttk
 from tkinter import messagebox
 
 # Constantes
-LEFT = -1
-RIGHT = 1
-STEP_LIMIT = 2**16
+IZQUIERDA = -1
+DERECHA = 1
+NUMERO_MAXIMO_TRANSICIONES = 2**16
 
 # Errores Maquina de turing
 ESTADO_INICIAL_VACIO = 2
@@ -123,7 +123,7 @@ def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[st
 
     cinta = construir_cinta(palabra_entrada)
 
-    steps = 0
+    numero_transiciones = 0
     print("Maquina de turing (traza):")
     print("estado_actual | posicion | cinta[posicion]")
     while estado_actual != estado_final and estado_actual in transiciones and cinta[posicion] in transiciones[estado_actual]:
@@ -138,8 +138,8 @@ def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[st
             # Agregar blancos a la cinta para simular ser semininfinita
             cinta.append('B')
 
-        steps += 1 
-        if steps >= STEP_LIMIT:
+        numero_transiciones += 1 
+        if numero_transiciones >= NUMERO_MAXIMO_TRANSICIONES:
             return MAQUINA_TURING_DEMASIADOS_PASOS
 
 
@@ -169,23 +169,25 @@ def window():
     entry_estado_inicial.grid(row=2)
 
     # Entrada para el estado final
-    ttk.Label(frame, text="Estado final (ej: q2)", justify="left").grid(row=3)
+    ttk.Label(frame, text="Estado final (ej: q2)").grid(row=3)
     entry_estado_final = ttk.Entry(frame, width=32)
     entry_estado_final.grid(row=4)
 
     # Entrada para las transiciones
     ttk.Label(frame, text="Transiciones separadas por saltos de linea", justify="left").grid(row=5)
-    ttk.Label(frame, text="Ejemplo:", justify="lef").grid(row=6)
-    ttk.Label(frame, text="d(q0, a) = (q1, a, D)", justify="left").grid(row=7)
-    ttk.Label(frame, text="d(q1, b) = (q1, b, D)", justify="left").grid(row=8)
-    ttk.Label(frame, text="d(q1, B) = (q2, B, I)", justify="left").grid(row=9)
+    ttk.Label(frame, text="Ejemplo:").grid(row=6)
+    ttk.Label(frame, text="d(q0, a) = (q1, a, D)",).grid(row=7)
+    ttk.Label(frame, text="d(q1, b) = (q1, b, D)",).grid(row=8)
+    ttk.Label(frame, text="d(q1, B) = (q2, B, I)").grid(row=9)
+    ttk.Label(frame, text="I: Mover el cabezal a la izquierda, D: Mover el cabezal a la derecha").grid(row=10)
+    ttk.Label(frame, text="B: Blanco").grid(row=11)
     text_transiciones = tk.Text(frame)
-    text_transiciones.grid(row=10)
+    text_transiciones.grid(row=12)
     
     # Palabra de entrada
-    ttk.Label(frame, text="Palabra de entrada (ej: abbb)").grid(row=11)
+    ttk.Label(frame, text="Palabra de entrada (ej: abbb)").grid(row=13)
     entry_palabra_entrada = ttk.Entry(frame, width=32)
-    entry_palabra_entrada.grid(row=12)
+    entry_palabra_entrada.grid(row=14)
 
 
     def procesar_palabra():
@@ -204,7 +206,7 @@ def window():
                                 message="El estado final no puede estar vacio.")
         elif resultado == TRANSICIONES_INVALIDAS:
             messagebox.showerror(title="Las transiciones no fueron definidas correctamente.", \
-                                message="Las transiciones no fueron definidad correctamente.")
+                                message="Las transiciones no fueron definidas correctamente.")
         elif resultado == PALABRA_ENTRADA_VACIA:
             messagebox.showerror(title="La palabra de entrada esta vacia.",
                                 message="La palabra de entrada esta vacia.")
@@ -220,7 +222,7 @@ def window():
                                 message="Palabra rechazada.")
             
     
-    button = ttk.Button(frame, text='Procesar Palabra', command=procesar_palabra).grid(row=13)
+    button = ttk.Button(frame, text='Procesar Palabra', command=procesar_palabra).grid(row=15)
 
     root.mainloop()
 
