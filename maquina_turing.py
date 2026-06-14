@@ -16,8 +16,6 @@ MAQUINA_TURING_DEMASIADOS_PASOS = 6
 
 def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str, str, int]]] | None:
     try:
-        print("transiciones_str:")
-        print(transiciones_str)
         funcion_transicion: dict[str, dict[str, tuple[str, str, int]]] = {}
         # Elimina los espacios en blanco
         transiciones_str: str = transiciones_str.replace(' ', '')
@@ -32,21 +30,18 @@ def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str
                 entradas: list[str] = temp[0].split(',')
 
                 if len(entradas) != 2:
-                    print("entradas:", entradas)
                     return None
 
                 if entradas[0][0:2] != 'd(':
-                    print(1)
                     return None
 
                 estado_entrada: str = entradas[0][2:]
 
                 if len(entradas[1]) != 2:
-                    print(2)
+                    
                     return None
                 
                 if entradas[1][1] != ')':
-                    print(3)
                     return None
 
                 simbolo_entrada: str = entradas[1][0]
@@ -55,11 +50,9 @@ def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str
 
 
                 if len(salidas) != 3:
-                    print(4)
                     return None
 
                 if salidas[0][0] != '(':
-                    print(5)
                     return None
 
                 estado_salida: str = salidas[0][1:]
@@ -67,7 +60,6 @@ def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str
                 direccion_salida = 0
 
                 if salidas[2][1] != ')':
-                    print(6)
                     return None
 
                 if salidas[2][0] == 'I':
@@ -77,19 +69,15 @@ def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str
 
                 if estado_entrada in funcion_transicion:
                     if simbolo_entrada in funcion_transicion[estado_entrada]:
-                        print(7)
                         return None
                     funcion_transicion[estado_entrada][simbolo_entrada] = (estado_salida, simbolo_salida, direccion_salida)
 
                 else:
                     funcion_transicion[estado_entrada] = {simbolo_entrada: (estado_salida, simbolo_salida, direccion_salida)}
         
-        print("funcion_transicion:")
-        print(funcion_transicion)
         return funcion_transicion
 
     except Exception as e:
-        print(e)
         return None
 
 
@@ -121,10 +109,7 @@ def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[st
     cinta = construir_cinta(palabra_entrada)
 
     numero_transiciones = 0
-    print("Maquina de turing (traza):")
-    print("estado_actual | posicion | cinta[posicion]")
     while estado_actual != estado_final and estado_actual in transiciones and cinta[posicion] in transiciones[estado_actual]:
-        print(estado_actual, posicion, cinta[posicion])
         estado_actual, cinta[posicion], direccion = transiciones[estado_actual][cinta[posicion]]
         posicion += direccion
         
@@ -139,9 +124,6 @@ def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[st
         if numero_transiciones >= NUMERO_MAXIMO_TRANSICIONES:
             return MAQUINA_TURING_DEMASIADOS_PASOS
 
-
-    print("While finalizado:")
-    print(estado_actual, posicion, cinta[posicion])
 
     if estado_actual == estado_final:
         # Acepta la palabra
