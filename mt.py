@@ -74,10 +74,13 @@ def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str
                     direccion_salida = -1
                 elif salidas[2][0] == 'D':
                     direccion_salida = 1
+                else:
+                    print(7)
+                    return None
 
                 if estado_entrada in funcion_transicion:
                     if simbolo_entrada in funcion_transicion[estado_entrada]:
-                        print(7)
+                        print(8)
                         return None
                     funcion_transicion[estado_entrada][simbolo_entrada] = (estado_salida, simbolo_salida, direccion_salida)
 
