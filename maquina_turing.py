@@ -77,13 +77,13 @@ def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str
         
         return funcion_transicion
 
-    except Exception as e:
+    except:
         return None
 
 
 def construir_cinta(palabra_entrada: str) -> list[str]:
     '''Construye una cinta con los caracteres con la palabra de entrada'''
-    cinta = []
+    cinta: list[str] = []
     for x in palabra_entrada:
         cinta.append(x)
     # Si la cinta esta vacia agregar Blanco
@@ -92,7 +92,7 @@ def construir_cinta(palabra_entrada: str) -> list[str]:
     return cinta
 
 
-def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[str, dict[str: tuple[str, str, int]]], palabra_entrada: str) -> bool | int:
+def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[str, dict[str, tuple[str, str, int]]], palabra_entrada: str) -> bool | int:
     estado_actual: str = estado_inicial
     posicion = 0
 
@@ -106,7 +106,7 @@ def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[st
         return TRANSICIONES_INVALIDAS
 
 
-    cinta = construir_cinta(palabra_entrada)
+    cinta: list[str] = construir_cinta(palabra_entrada)
 
     numero_transiciones = 0
     while estado_actual != estado_final and estado_actual in transiciones and cinta[posicion] in transiciones[estado_actual]:
@@ -121,7 +121,7 @@ def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[st
             cinta.append('B')
 
         numero_transiciones += 1 
-        if numero_transiciones >= NUMERO_MAXIMO_TRANSICIONES:
+        if numero_transiciones > NUMERO_MAXIMO_TRANSICIONES:
             return MAQUINA_TURING_DEMASIADOS_PASOS
 
 
@@ -143,7 +143,6 @@ def window():
 
     # Entrada para el estado inicial
     ttk.Label(frame, text="Estado inicial (ej: q0)", justify="left").grid(row=1)
-    estado_inicial = ""
     entry_estado_inicial = ttk.Entry(frame, width=32)
     entry_estado_inicial.grid(row=2)
 
@@ -172,10 +171,10 @@ def window():
     def procesar_palabra():
         estado_inicial: str = entry_estado_inicial.get().replace(' ', '')
         estado_final: str = entry_estado_final.get().replace(' ', '')
-        transiciones: str = parsear_transiciones(text_transiciones.get("1.0", "end"))
+        transiciones: dict[str, dict[str, tuple[str, str, int]]] = parsear_transiciones(text_transiciones.get("1.0", "end"))
         palabra_entrada: str = entry_palabra_entrada.get().strip()
 
-        resultado = maquina_turing(estado_inicial, estado_final, transiciones, palabra_entrada)
+        resultado: bool | int = maquina_turing(estado_inicial, estado_final, transiciones, palabra_entrada)
 
         if resultado == ESTADO_INICIAL_VACIO:
             messagebox.showerror(title="El estado inicial no puede estar vacio.", \
@@ -186,9 +185,6 @@ def window():
         elif resultado == TRANSICIONES_INVALIDAS:
             messagebox.showerror(title="Las transiciones no fueron definidas correctamente.", \
                                 message="Las transiciones no fueron definidas correctamente.")
-        elif resultado == PALABRA_ENTRADA_VACIA:
-            messagebox.showerror(title="La palabra de entrada esta vacia.",
-                                message="La palabra de entrada esta vacia.")
         elif resultado == MAQUINA_TURING_DEMASIADOS_PASOS:
             messagebox.showerror(title="La maquina de Turing realizo mas de 2^16=65536 cambios de estado...",
                                 message="La maquina de turing realizo mas de 2^16=65536 cambios de estado. \n\
@@ -197,7 +193,7 @@ def window():
             messagebox.showinfo(title="Palabra aceptada.",
                                 message="Palabra aceptada.")
         elif resultado == False:
-            messagebox.showerror("Palabra rechaza.",
+            messagebox.showerror("Palabra rechazada.",
                                 message="Palabra rechazada.")
             
     
