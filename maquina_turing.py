@@ -61,9 +61,9 @@ def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str
                     return None
 
                 if salidas[2][0] == 'I':
-                    direccion_salida = -1
+                    direccion_salida = IZQUIERDA
                 elif salidas[2][0] == 'D':
-                    direccion_salida = 1
+                    direccion_salida = DERECHA
                 else:
                     return None
 
@@ -187,17 +187,17 @@ def window():
                                 message="Las transiciones no fueron definidas correctamente.")
         elif resultado == MAQUINA_TURING_DEMASIADOS_PASOS:
             messagebox.showerror(title="La maquina de Turing realizo mas de 2^16=65536 cambios de estado...",
-                                message="La maquina de turing realizo mas de 2^16=65536 cambios de estado. \n\
+                                message="La maquina de Turing realizo mas de 2^16=65536 cambios de estado. \n\
                                         Se detuvo la ejecución.")
         elif resultado == True:
             messagebox.showinfo(title="Palabra aceptada.",
                                 message="Palabra aceptada.")
         elif resultado == False:
-            messagebox.showerror("Palabra rechazada.",
+            messagebox.showerror(title="Palabra rechazada.",
                                 message="Palabra rechazada.")
             
     
-    button = ttk.Button(frame, text='Procesar Palabra', command=procesar_palabra).grid(row=15)
+    ttk.Button(frame, text='Procesar Palabra', command=procesar_palabra).grid(row=15)
 
     root.mainloop()
 
