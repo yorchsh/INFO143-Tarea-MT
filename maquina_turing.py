@@ -11,7 +11,6 @@ NUMERO_MAXIMO_TRANSICIONES = 2**16
 ESTADO_INICIAL_VACIO = 2
 ESTADO_FINAL_VACIO = 3
 TRANSICIONES_INVALIDAS = 4
-PALABRA_ENTRADA_VACIA = 5
 MAQUINA_TURING_DEMASIADOS_PASOS = 6
 
 def parsear_transiciones(transiciones_str: str) -> dict[str, dict[str, tuple[str, str, int]]] | None:
