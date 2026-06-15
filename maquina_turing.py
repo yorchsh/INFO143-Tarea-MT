@@ -136,6 +136,7 @@ def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[st
 def window():
     # Crea la ventana
     root = tk.Tk()
+    root.title("Maquina de Turing")
     
     # Crea un cuadro dentro de la ventana
     frame = ttk.Frame(root, padding=10)
