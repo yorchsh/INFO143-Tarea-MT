@@ -108,7 +108,7 @@ def maquina_turing(estado_inicial: str, estado_final: str, transiciones: dict[st
 
     cinta: list[str] = construir_cinta(palabra_entrada)
 
-    numero_transiciones = 0
+    numero_transiciones: int = 0
     while estado_actual != estado_final and estado_actual in transiciones and cinta[posicion] in transiciones[estado_actual]:
         estado_actual, cinta[posicion], direccion = transiciones[estado_actual][cinta[posicion]]
         posicion += direccion
